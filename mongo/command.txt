@@ -1,0 +1,7 @@
+docker run -d -p 27017:27017 --name m1 --net mongo-cluster -v ~/mongors/data1:/data/db  mongo mongod --replSet mongo-rs
+docker run -d -p 27018:27017 --name m2 --net mongo-cluster -v ~/mongors/data2:/data/db  mongo mongod --replSet mongo-rs
+docker run -d -p 27019:27017 --name m3 --net mongo-cluster -v ~/mongors/data3:/data/db  mongo mongod --replSet mongo-rs
+
+
+
+docker exec -it m1 mongo
