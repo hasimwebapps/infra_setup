@@ -5,17 +5,17 @@ var config = {
         {
             "_id": 0,
             "host": "m1:27017",
-            "priority": 10
+            "priority": 3
         },
         {
             "_id": 1,
             "host": "m2:27017",
-            "priority": 3
+            "priority": 2
         },
         {
             "_id": 2,
             "host": "m3:27017",
-            "priority": 5
+            "priority": 2
         }
     ]
 };

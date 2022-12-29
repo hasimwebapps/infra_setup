@@ -1,7 +1,39 @@
-docker run -d -p 27017:27017 --name m1 --net mongo-cluster -v ~/mongors/data1:/data/db  mongo mongod --replSet mongo-rs
-docker run -d -p 27018:27017 --name m2 --net mongo-cluster -v ~/mongors/data2:/data/db  mongo mongod --replSet mongo-rs
-docker run -d -p 27019:27017 --name m3 --net mongo-cluster -v ~/mongors/data3:/data/db  mongo mongod --replSet mongo-rs
+docker run -d -p 27017:27017 --name m1 --net mongo-cluster mongo mongod --replSet mongo-rs
+docker run -d -p 27018:27017 --name m2 --net mongo-cluster mongo mongod --replSet mongo-rs
+docker run -d -p 27019:27017 --name m3 --net mongo-cluster mongo mongod --replSet mongo-rs
 
 
 
 docker exec -it m1 mongo
+
+var config = {
+    "_id": "mongo-rs",
+    "version": 1,
+    "members": [
+        {
+            "_id": 0,
+            "host": "m1:27017",
+            "priority": 3
+        },
+        {
+            "_id": 1,
+            "host": "m2:27017",
+            "priority": 2
+        },
+        {
+            "_id": 2,
+            "host": "m3:27017",
+            "priority": 2
+        }
+    ]
+};
+rs.initiate(config, { force: true });
+rs.status();
+
+
+var cfg = rs.conf();
+cfg.members[0].priority = 10;
+cfg.members[1].priority = 3;
+cfg.members[2].priority = 5;
+rs.reconfig(cfg);
+
